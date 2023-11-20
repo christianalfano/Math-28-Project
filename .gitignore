@@ -1,0 +1,12 @@
+.Rproj.user
+.Rhistory
+.RData
+.Ruserdata
+.DS_STORE
+Paper.log
+Paper.aux
+Paper.out
+
+# REMOVE ONCE READY TO SUBMIT
+Paper.pdf
+Paper.html

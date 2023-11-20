@@ -1,0 +1,76 @@
+---
+title: "Your cool paper"
+author: "Team Member, Team Member, Team Member"
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+geometry: margin=1in
+output:
+  pdf_document:
+    extra_dependencies: ['amsmath']
+---
+
+```{r setup, echo=FALSE, warning=FALSE, message=FALSE}
+# This code sets up everything for the rest of the document
+knitr::opts_chunk$set(
+#	echo = FALSE,
+	message = FALSE,
+	warning = FALSE
+)
+library(ggplot2)
+library(dplyr)
+library(tidyr)
+library(scales)
+library(stargazer)
+```
+
+# Hello!
+
+This is an inline equation, where we can include things like $\Delta$ and $y=mx+b$. We can also have expressions on their own line:
+
+$$
+\begin{aligned}
+f(x) &= \lim_{x\rightarrow 10} \frac{\frac{d}{dx}(x^2-5x-50)}{\frac{d}{dx}(x-10)} \\
+&\stackrel{H}{=} \lim_{x\rightarrow 10} 2x+5 \\
+&= 2(10)-5 = \boxed{15}
+\end{aligned}
+$$
+
+# Importing Data
+
+Now, let's read some data from our CSV.
+
+```{r data}
+# Read data from CSV file
+# This is fake sample data. Find your own data.
+data <- read.csv("data/sample.csv")
+```
+
+# Data Summary
+
+```{r summary}
+# Display the first few rows of the data
+knitr::kable(head(data))
+
+# Display a summary of the data
+knitr::kable(summary(data))
+```
+
+# Regression Analysis
+```{r regression, results='asis'}
+# Linear regression
+model <- lm(velocity ~ time, data=data)
+
+# Summary of the model
+stargazer(model, type="latex", header=FALSE)
+```
+
+\newpage
+
+# Data Visualization
+
+```{r plot, fig.cap="Data of stuff", fig.align="center", fig.width=4, fig.height=3}
+# Graph of data, where x is time and y is velocity
+ggplot(data, aes(x=time, y=velocity)) + 
+  geom_point() +
+  geom_smooth(method="lm", col="limegreen") +
+  theme_bw()
+```
